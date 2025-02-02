@@ -17,7 +17,9 @@ jobs:
 
       - name: Configure kubectl
         run: |
+          mkdir -p $HOME/.kube  # Ensure .kube directory exists
           echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config  # Secure the config file
           kubectl config use-context minikube  # Change this if using a cloud cluster
 
       - name: Move to the `k8s/` Directory
